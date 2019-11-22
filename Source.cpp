@@ -1,7 +1,7 @@
 #include <algorithm>
 #include <iostream>
 
-#include "DobriyArray.h"
+#include "containers/DobriyArray.h"
 
 void menu() {
 	std::cout << "0 : EXIT\n";
@@ -11,6 +11,8 @@ void menu() {
 	std::cout << "4 : GO THROUGH VECTOR WITH ITERATOR AND SHOW EVERY STEP\n";
 	std::cout << "5 : GO THROUGH VECTOR WITH ITERATOR AND INSERT A NEW OBJECT BEFORE THIS ONE\n";
 	std::cout << "6 : GO THROUGH VECTOR WITH ITERATOR AND ERASE THIS OBJECT\n";
+	std::cout << "7 : INSERT OBJECT BY INDEX\n";
+	std::cout << "8 : ERASE OBJECT BY INDEX\n";
 	std::cout << "> ";
 }
 
@@ -139,7 +141,52 @@ int main() {
 				++it;
 				n++;
 			}
-		}  
+		} else if (cmd == 7) {
+			std::cout << "Enter vertices of object you want to insert : ";
+			rectangle<int> toInsert(std::cin);
+			std::cout << "Enter index : ";
+			int id;
+			std::cin >> id;
+			auto it = Vector.begin();
+			for (int i = 0; i < id; i++) ++it;
+
+			Vector.insert(it, toInsert);
+
+			std::cout << "Now vector is like : \n";
+			int n = 0;
+
+			it = Vector.begin();
+			auto end = Vector.end();
+
+			while (it != end) {
+				std::cout << "___OBJECT_" << n << "__\n";
+				std::cout << *it;
+				++it;
+				n++;
+			}
+		} else if (cmd == 8) {
+			std::cout << "Enter index : ";
+			int id;
+			std::cin >> id;
+
+			auto it = Vector.begin();
+			for (int i = 0; i < id; i++) ++it;
+
+			Vector.erase(it);
+
+			std::cout << "Now vector is like : \n";
+			int n = 0;
+
+			it = Vector.begin();
+			auto end = Vector.end();
+
+			while (it != end) {
+				std::cout << "___OBJECT_" << n << "__\n";
+				std::cout << *it;
+				++it;
+				n++;
+			}
+		}
 	}
  	
 

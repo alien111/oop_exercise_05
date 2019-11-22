@@ -163,8 +163,11 @@ typename DobriyArray<T>::forward_iterator DobriyArray<T>::insert(forward_iterato
 			return &data[i];
 		}
 	}
-
-	throw std::logic_error("Place doesn't exist!\n");
+	reSize(size++);
+	data[size - 1] = object;
+	used++;
+	return &data[size - 1];
+	//throw std::logic_error("Place doesn't exist!\n");
 }
 
 template<class T>
