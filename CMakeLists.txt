@@ -6,4 +6,4 @@ add_executable(run
 	Source.cpp
 	)
 
-set_property(TARGET lab5 PROPERTY CXX_STANDARD 17)
+set_property(TARGET run PROPERTY CXX_STANDARD 17)
