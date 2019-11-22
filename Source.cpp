@@ -34,7 +34,7 @@ int main() {
 			for (int i = 0; i < Vector.getSize(); i++) {
 				std::cout << "Enter vertices : \n";
 				rectangle<int> rect(std::cin);
-				Vector[i] = rect;
+				Vector.push_back(rect);
 			} 
 		} else if (cmd == 2) {
 			std::cout << "Enter index : ";
@@ -97,11 +97,13 @@ int main() {
 			while (it != end) {
 				if (*it == toDelete) {
 					Vector.insert(it, toInsert);
+					break;
 				}
 				++it;
 			}
 
 			it = Vector.begin();
+			end = Vector.end();
 
 			std::cout << "Now vector is like : \n";
 			int n = 0;

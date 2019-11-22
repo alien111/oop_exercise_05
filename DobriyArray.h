@@ -43,6 +43,7 @@ public:
 
 	T& operator[](int index);
 	void reSize(int newSize);
+	void push_back(T object);
 	int getSize();
 	int getUsed();
 	forward_iterator insert(forward_iterator it, T object);
@@ -82,6 +83,15 @@ DobriyArray<T>::DobriyArray(int sz) {
 	data = std::unique_ptr<T[]>(new T[sz]);
 	size = sz;
 	used = 0;
+
+}
+
+template<class T>
+void DobriyArray<T>::push_back(T object) {
+
+	if (used >= size) reSize(size++);
+	data[used] = object;
+	used++;
 
 }
 
@@ -145,7 +155,7 @@ typename DobriyArray<T>::forward_iterator DobriyArray<T>::insert(forward_iterato
 	for (int i = 0; i < size; i++) {
 		if (it == &data[i]) {
 			if (used == size) reSize(size++);
-			for (int j = used - 1; j >= 0; j--) {
+			for (int j = size - 1; j >= i; j--) {
 				data[j + 1] = data[j];
 			}
 			data[i] = object;
