@@ -1,7 +1,7 @@
 #include <algorithm>
 #include <iostream>
 
-#include "containers/DobriyArray.h"
+#include "DobriyArray.h"
 
 void menu() {
 	std::cout << "0 : EXIT\n";
