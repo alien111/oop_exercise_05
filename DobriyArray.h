@@ -44,6 +44,7 @@ public:
 	T& operator[](int index);
 	void reSize(int newSize);
 	void push_back(T object);
+	void addOnOutOfRange(int position, T object);
 	int getSize();
 	int getUsed();
 	forward_iterator insert(forward_iterator it, T object);
@@ -71,9 +72,10 @@ void DobriyArray<T>::reSize(int newSize) {
 	if (size == newSize) return;
 	std::unique_ptr<T[]> resizing = std::unique_ptr<T[]>(new T[newSize]);
 
-	for (int i = 0; i < std::min(used, newSize); i++) {
+	for (int i = 0; i < std::min(size, newSize); i++) {
 		resizing[i] = data[i];
-	} 
+	}
+	size = newSize;
 	data = std::move(resizing);
 }
 
@@ -95,6 +97,15 @@ void DobriyArray<T>::push_back(T object) {
 
 }
 
+template<class T>
+void DobriyArray<T>::addOnOutOfRange(int position, T object) {
+
+	reSize(position + 1);
+
+	data[position] = object;
+	used++;
+
+}
 
 template<class T>
 DobriyArray<T>::forward_iterator::forward_iterator(T *ptr) {
@@ -154,29 +165,26 @@ template<class T>
 typename DobriyArray<T>::forward_iterator DobriyArray<T>::insert(forward_iterator it, T object) {
 	for (int i = 0; i < size; i++) {
 		if (it == &data[i]) {
-			if (used == size) reSize(size++);
-			for (int j = size - 1; j >= i; j--) {
-				data[j + 1] = data[j];
+			if (used == size) reSize(size + 1);
+			for (int j = size - 1; j > i; j--) {
+				data[j] = data[j - 1];
 			}
 			data[i] = object;
 			used++;
 			return &data[i];
 		}
 	}
-	reSize(size++);
-	data[size - 1] = object;
-	used++;
-	return &data[size - 1];
-	//throw std::logic_error("Place doesn't exist!\n");
+	throw std::logic_error("Place doesn't exist!\n");
 }
 
 template<class T>
 void DobriyArray<T>::erase(forward_iterator it) {
 	for (int i = 0; i < size; i++) {
 		if (it == &data[i]) {
-			for (int j = i; j < size; j++) {
+			for (int j = i; j < size - 1; j++) {
 				data[j] = data[j + 1];
 			}
+			reSize(size - 1);
 			used--;
 			return;
 		}

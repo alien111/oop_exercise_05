@@ -1,7 +1,7 @@
 #include <algorithm>
 #include <iostream>
 
-#include "DobriyArray.h"
+#include "containers/DobriyArray.h"
 
 void menu() {
 	std::cout << "0 : EXIT\n";
@@ -148,10 +148,13 @@ int main() {
 			int id;
 			std::cin >> id;
 			auto it = Vector.begin();
-			for (int i = 0; i < id; i++) ++it;
+			if (id >= Vector.getSize()) Vector.addOnOutOfRange(id, toInsert);
+			else {
+				for (int i = 0; i < id; i++) ++it;
 
-			Vector.insert(it, toInsert);
+				Vector.insert(it, toInsert);
 
+			}
 			std::cout << "Now vector is like : \n";
 			int n = 0;
 
